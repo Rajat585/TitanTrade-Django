@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile - Titan Trade{% endblock %}
+{% block content %}
+<div class="row justify-content-center my-5">
+  <div class="col-xl-10">
+    <div class="card p-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+        <div>
+          <p class="text-uppercase text-secondary mb-2 letter-spacing-2">Account Profile</p>
+          <h1 class="h3 mb-1">Welcome back, {{ user.first_name|default:user.username }}.</h1>
+          <p class="text-muted mb-0">Review your account details and member information securely.</p>
+        </div>
+        <div class="text-end">
+          <span class="badge bg-primary px-3 py-2">Member since {{ user.date_joined|date:'F j, Y' }}</span>
+        </div>
+      </div>
+
+      <div class="row gy-4">
+        <div class="col-lg-5">
+          <div class="card bg-light p-4 h-100 border-0">
+            <div class="mb-4">
+              <h5 class="fw-bold">Profile Summary</h5>
+              <p class="text-muted">Your secure Titan Trade profile includes the key account fields used for login and contact.</p>
+            </div>
+            <div class="mb-3">
+              <strong class="d-block text-secondary">Username</strong>
+              <span>{{ user.username }}</span>
+            </div>
+            <div class="mb-3">
+              <strong class="d-block text-secondary">Email</strong>
+              <span>{{ user.email|default:'Not provided' }}</span>
+            </div>
+            <div class="mb-3">
+              <strong class="d-block text-secondary">Status</strong>
+              <span>{% if user.is_active %}Active{% else %}Inactive{% endif %}</span>
+            </div>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Go to Dashboard</a>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="card border-0 p-4 h-100">
+            <h5 class="fw-bold mb-3">Account Details</h5>
+            <div class="row gy-3">
+              <div class="col-12 col-md-6">
+                <div class="p-3 rounded-3 bg-white shadow-sm">
+                  <small class="text-uppercase text-muted">Full Name</small>
+                  <p class="mb-0">{{ user.get_full_name|default:'Not available' }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="p-3 rounded-3 bg-white shadow-sm">
+                  <small class="text-uppercase text-muted">Username</small>
+                  <p class="mb-0">{{ user.username }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="p-3 rounded-3 bg-white shadow-sm">
+                  <small class="text-uppercase text-muted">Email Address</small>
+                  <p class="mb-0">{{ user.email|default:'Not provided' }}</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="p-3 rounded-3 bg-white shadow-sm">
+                  <small class="text-uppercase text-muted">Last login</small>
+                  <p class="mb-0">{{ user.last_login|date:'F j, Y, g:i a'|default:'Never logged in' }}</p>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="p-3 rounded-3 bg-white shadow-sm">
+                  <small class="text-uppercase text-muted">Account type</small>
+                  <p class="mb-0">{% if user.is_staff %}Administrator{% else %}Employee{% endif %}</p>
+                </div>
+              </div>
+            </div>
+
+            {% if user.is_staff %}
+            <div class="alert alert-info mt-3">
+              You are logged in as <strong>Admin</strong>. Use the Admin Panel from the navbar to manage site data.
+            </div>
+            {% endif %}
+
+            <div class="mt-4">
+              <h6 class="fw-bold">Security & actions</h6>
+              <p class="text-muted mb-3">Keep your account safe and update your details in your dashboard whenever needed.</p>
+              <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'dashboard' %}" class="btn btn-primary px-4 py-2">View Dashboard</a>
+                <a href="{% url 'logout' %}" class="btn btn-secondary px-4 py-2">Logout</a>
+                <a href="{% url 'delete_account' %}" class="btn btn-danger px-4 py-2"
+                   onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                  Delete Account
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

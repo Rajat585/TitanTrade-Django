@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Register - Titan
+Trade{% endblock %} {% block content %}
+
+<div
+  class="container d-flex justify-content-center align-items-center"
+  style="min-height: 80vh"
+>
+  <div class="col-md-6">
+    <div class="card shadow-lg p-4">
+      <h2 class="text-center text-success mb-4">
+        Create Your Titan Trade Account
+      </h2>
+
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} text-center mb-3">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %}
+
+      <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label fw-bold">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Choose a username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Confirm Password</label>
+          <input
+            type="password"
+            name="password2"
+            class="form-control"
+            placeholder="Repeat password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter email address"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">First Name</label>
+          <input
+            type="text"
+            name="first_name"
+            class="form-control"
+            placeholder="First name"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Last Name</label>
+          <input
+            type="text"
+            name="last_name"
+            class="form-control"
+            placeholder="Last name"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Admin Approval Code (optional)</label>
+          <input
+            type="text"
+            name="admin_code"
+            class="form-control"
+            placeholder="Enter pre-approved admin code if you have one"
+          />
+          <small class="text-muted">Only approved admins should enter this code.</small>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
+      </form>
+      <div class="text-center mt-3">
+        <p class="mb-0">
+          Already have an account? <a href="{% url 'login' %}">Login here</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

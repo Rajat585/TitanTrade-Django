@@ -1,0 +1,17 @@
+/* Titan Trade static stylesheet */
+body {
+  background-color: #f8fafc;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn {
+  transition: all 0.25s ease;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.navbar {
+  background-color: #131a23;
+}

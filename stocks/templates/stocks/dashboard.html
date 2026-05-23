@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Titan Trade{% endblock %}
+{% block content %}
+
+<!-- Page Header -->
+<div class="text-center mb-5">
+  <h2 class="text-primary fw-bold">
+    {% if is_admin %}Admin Dashboard{% else %}Live Market Dashboard{% endif %}
+  </h2>
+  <p class="lead">
+    {% if is_admin %}
+      Welcome back, Admin. Manage the trading data and monitor site activity.
+    {% else %}
+      Track real-time prices, volumes, and charts of top companies.
+    {% endif %}
+  </p>
+</div>
+
+{% if is_admin %}
+<div class="row text-center mb-4">
+  <div class="col-md-4 mb-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Total Stock Symbols</h5>
+      <p class="display-6 text-primary">{{ total_companies }}</p>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Pending Messages</h5>
+      <p class="text-success fw-bold">{{ total_messages|default:'0' }}</p>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Admin Actions</h5>
+      <a href="{% url 'admin_panel' %}" class="btn btn-outline-primary mt-2">Open Admin Panel</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Search Bar -->
+<form method="GET" action="{% url 'dashboard' %}" class="d-flex justify-content-center mb-4">
+  <input class="form-control me-2" type="text" name="symbol" placeholder="Enter company symbol (e.g. TITAN, RELIANCE)" style="max-width:400px;">
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+<!-- Quick Stats -->
+<div class="row text-center mb-5">
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Total Companies</h5>
+      <p class="display-6 text-primary">{{ total_companies|default:"12" }}</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Top Gainer</h5>
+      <p class="text-success fw-bold">{{ top_gainer|default:"RELIANCE +3.5%" }}</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Top Loser</h5>
+      <p class="text-danger fw-bold">{{ top_loser|default:"TITAN -2.1%" }}</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm p-3">
+      <h5 class="fw-bold">Market Status</h5>
+      <p class="fw-bold">{{ market_status|default:"Open" }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Results Table -->
+{% if stocks %}
+<div class="table-responsive">
+  <table class="table table-hover text-center align-middle">
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Symbol</th>
+        <th>Price</th>
+        <th>Volume</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stock in stocks %}
+      <tr>
+        <td><img src="{{ stock.logo_url }}" class="logo-img"></td>
+        <td>{{ stock.symbol }}</td>
+        <td class="fw-bold text-primary">{{ stock.price }}</td>
+        <td>{{ stock.volume }}</td>
+        <td>{{ stock.last_updated }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+  No data yet. Please search a company symbol above.
+</div>
+{% endif %}
+
+<!-- Market Insights Section -->
+<div class="bg-light py-5 mt-5">
+  <div class="container text-center">
+    <h3 class="text-primary mb-4">Market Insights</h3>
+    <p class="lead">Stay updated with the latest trends, top gainers, and sector performance.</p>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Sector Performance</h5>
+          <p>IT sector up by 2.3%, Banking stable, FMCG down by 1.1%</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Global Markets</h5>
+          <p>NASDAQ +1.2%, S&P 500 +0.8%, Nikkei -0.5%</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+          <h5>Investor Sentiment</h5>
+          <p>Positive outlook with increased retail participation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

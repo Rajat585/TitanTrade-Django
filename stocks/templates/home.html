@@ -1,0 +1,90 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Home - Titan
+Trade{% endblock %} {% block content %}
+
+<!-- Hero Section -->
+<div class="bg-dark text-white text-center py-5 mb-5"
+     style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            url('{% static 'images/background.png' %}') center/cover no-repeat;">
+
+  <h1 class="display-4 fw-bold">Welcome to Titan Trade</h1>
+  <p class="lead">
+    Trade smarter with live charts, secure login, and professional tools.
+  </p>
+  <div class="mt-4">
+    {% if not user.is_authenticated %}
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-3">Login</a>
+    {% endif %}
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-lg me-3">Dashboard</a>
+    {% if not user.is_authenticated %}
+      <a href="{% url 'register' %}" class="btn btn-success btn-lg">Register</a>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="container text-center mb-5">
+  <h2 class="text-primary mb-4">Why Choose Titan Trade?</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm p-4">
+        <h5 class="fw-bold">Live Market Data</h5>
+        <p>Stay ahead with real-time charts and updates.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm p-4">
+        <h5 class="fw-bold">Secure Authentication</h5>
+        <p>Industry-standard login and data protection for peace of mind.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm p-4">
+        <h5 class="fw-bold">Professional Tools</h5>
+        <p>Advanced dashboards and analytics for smart trading decisions.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="text-primary mb-4">What Our Users Say</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <blockquote class="blockquote">
+          <p>"Titan Trade transformed my trading journey!"</p>
+          <footer class="blockquote-footer">Amit, Investor</footer>
+        </blockquote>
+      </div>
+      <div class="col-md-4">
+        <blockquote class="blockquote">
+          <p>"The dashboard is sleek, fast, and reliable."</p>
+          <footer class="blockquote-footer">Priya, Analyst</footer>
+        </blockquote>
+      </div>
+      <div class="col-md-4">
+        <blockquote class="blockquote">
+          <p>"Secure login and real-time charts — perfect combo."</p>
+          <footer class="blockquote-footer">Rahul, Trader</footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Call to Action -->
+<div class="text-center py-5">
+  <h2 class="fw-bold">Ready to Trade Smarter?</h2>
+  <p class="lead">
+    Join Titan Trade today and experience professional trading tools.
+  </p>
+  {% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg">Go to Dashboard</a>
+  {% else %}
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-3">Login</a>
+    <a href="{% url 'dashboard' %}" class="btn btn-success btn-lg">Dashboard</a>
+  {% endif %}
+</div>
+
+{% endblock %}
