@@ -9,4 +9,11 @@ Titan Trade - A Django based stock market dashboard with separate admin and user
 - Database-backed persistent storage
 - Error handling and success pages
 
-:
+**Demo Video**
+[Watch on YouTube](https://youtu.be/4tk1AsyYZ-Y)
+
+**Features**
+- Real-time trading charts
+- Secure authentication
+- API integration
+
